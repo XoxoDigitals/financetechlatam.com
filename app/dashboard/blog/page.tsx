@@ -7,12 +7,28 @@ import { displayPostStatus } from "@/lib/types";
 
 export default function BlogAdminPage() {
   const [posts, setPosts] = useState<PostRow[]>([]);
+  const [busyId, setBusyId] = useState("");
+
+  async function load() {
+    const res = await fetch("/api/admin/posts");
+    const d = await res.json();
+    setPosts(d.posts || []);
+  }
 
   useEffect(() => {
-    fetch("/api/admin/posts")
-      .then((r) => r.json())
-      .then((d) => setPosts(d.posts || []));
+    load();
   }, []);
+
+  async function publishNow(id: string) {
+    setBusyId(id);
+    await fetch(`/api/admin/posts/${id}`, {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ status: "published", published_at: new Date().toISOString() }),
+    });
+    await load();
+    setBusyId("");
+  }
 
   return (
     <div>
@@ -22,9 +38,7 @@ export default function BlogAdminPage() {
           New post
         </Link>
       </div>
-      <p className="dash-sub">
-        Ten niche articles are scheduled every other day from 6 Sep 2026. Edit, reschedule, or unpublish any of them.
-      </p>
+      <p className="dash-sub">Create, edit, schedule, or publish posts immediately.</p>
       <div className="dash-card" style={{ overflowX: "auto" }}>
         <table className="dash-table">
           <thead>
@@ -51,9 +65,21 @@ export default function BlogAdminPage() {
                     <span className={`dash-badge ${st}`}>{st}</span>
                   </td>
                   <td>
-                    <Link className="dash-btn ghost" href={`/dashboard/blog/${p.id}`}>
-                      Edit
-                    </Link>
+                    <div className="dash-actions">
+                      {st !== "live" && (
+                        <button
+                          className="dash-btn"
+                          type="button"
+                          disabled={busyId === p.id}
+                          onClick={() => publishNow(p.id)}
+                        >
+                          {busyId === p.id ? "Publishing…" : "Publish now"}
+                        </button>
+                      )}
+                      <Link className="dash-btn ghost" href={`/dashboard/blog/${p.id}`}>
+                        Edit
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               );

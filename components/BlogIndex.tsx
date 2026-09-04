@@ -36,14 +36,6 @@ export function BlogIndex({ posts }: { posts: PostRow[] }) {
         </p>
       </section>
       <section style={css("max-width:1440px;margin:0 auto;padding:clamp(36px,5vw,72px) var(--gutter) 96px")}>
-        {posts.length === 0 && (
-          <p style={css("color:#5A6577;max-width:560px")}>
-            {t(
-              "The first articles are scheduled to go live from 6 September 2026, one every other day. Check back then, or browse the operating units in the meantime.",
-              "Los primeros artículos se publican desde el 6 de septiembre de 2026, uno cada dos días. Mientras tanto, recorre las unidades de operación."
-            )}
-          </p>
-        )}
         <div style={css("display:grid;grid-template-columns:var(--g2);gap:16px")}>
           {posts.map((p) => (
             <Link

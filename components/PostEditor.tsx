@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { FaqItem, PostRow, PostStatus } from "@/lib/types";
+import { displayPostStatus } from "@/lib/types";
 import { slugify } from "@/lib/markdown";
 
 type Form = {
@@ -77,14 +78,17 @@ export function PostEditor({ post }: { post?: PostRow }) {
     });
   }
 
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
+  async function save(overrides?: { status?: PostStatus; published_at?: string | null }) {
     setBusy(true);
     setError("");
     const payload = {
       ...f,
+      ...overrides,
       slug: slugify(f.slug || f.title_en),
-      published_at: fromLocalInput(f.published_at),
+      published_at:
+        overrides && "published_at" in overrides
+          ? overrides.published_at
+          : fromLocalInput(f.published_at),
       faq: f.faq.filter((x) => x.q_en.trim() || x.q_es.trim()),
     };
     const url = post ? `/api/admin/posts/${post.id}` : "/api/admin/posts";
@@ -101,6 +105,15 @@ export function PostEditor({ post }: { post?: PostRow }) {
     }
     router.push("/dashboard/blog");
     router.refresh();
+  }
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    await save();
+  }
+
+  async function publishNow() {
+    await save({ status: "published", published_at: new Date().toISOString() });
   }
 
   async function remove() {
@@ -222,6 +235,11 @@ export function PostEditor({ post }: { post?: PostRow }) {
         <button className="dash-btn" type="submit" disabled={busy}>
           {busy ? "Saving…" : "Save post"}
         </button>
+        {(!post || displayPostStatus(post) !== "live") && (
+          <button className="dash-btn" type="button" disabled={busy} onClick={publishNow}>
+            Publish now
+          </button>
+        )}
         {post && (
           <button className="dash-btn danger" type="button" onClick={remove}>
             Delete
