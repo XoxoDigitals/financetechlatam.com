@@ -3,7 +3,6 @@
 import { FormEvent, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import "./dashboard.css";
 
 function LoginForm() {
   const router = useRouter();
