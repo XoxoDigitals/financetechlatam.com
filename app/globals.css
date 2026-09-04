@@ -1,0 +1,378 @@
+:root {
+  --g2: repeat(2, 1fr);
+  --g3: repeat(3, 1fr);
+  --g4: repeat(4, 1fr);
+  --g5: repeat(5, 1fr);
+  --g32: 1.45fr 1fr;
+  --gHero: 1.15fr 0.85fr;
+  --gFooter: 1.4fr 1fr 1fr 1fr;
+  --span2: span 2;
+  /* Horizontal page gutter — scales continuously (matches the design). */
+  --gutter: clamp(18px, 4.2vw, 32px);
+}
+
+/* md: 720–1079px */
+@media (max-width: 1079px) {
+  :root {
+    --g3: repeat(2, 1fr);
+    --g4: repeat(2, 1fr);
+    --g5: repeat(2, 1fr);
+    --g32: 1fr;
+    --gHero: 1fr;
+    --gFooter: repeat(2, 1fr);
+    --span2: auto;
+  }
+}
+
+/* sm: < 720px */
+@media (max-width: 719px) {
+  :root {
+    --g2: 1fr;
+    --g3: 1fr;
+    --g4: 1fr;
+    --g5: 1fr;
+    --gFooter: 1fr;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: #0c1524;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; /* don't let iOS inflate text in landscape */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #0c1524;
+  overflow-x: hidden; /* belt-and-braces against any horizontal spill */
+}
+
+.ftl-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #f6f4ef;
+  color: #0c1524;
+}
+.ftl-shell main {
+  flex: 1 0 auto;
+}
+.ftl-shell footer {
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+a {
+  color: #2440ff;
+  text-decoration: none;
+}
+a:hover {
+  color: #0c1524;
+}
+
+::selection {
+  background: #c9d0ff;
+}
+
+@keyframes ftl-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Native form controls inherit the design's field look. */
+input,
+textarea,
+select {
+  font-family: "Instrument Sans", sans-serif;
+  max-width: 100%;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #2440ff !important;
+}
+
+/* iOS zooms in on focus for inputs under 16px; keep them >=16px on phones. */
+@media (max-width: 719px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* ---- Header: desktop nav vs. mobile hamburger ---- */
+.ftl-nav-desktop {
+  display: flex;
+}
+.ftl-cta-desktop {
+  display: inline-flex;
+}
+.ftl-nav-toggle {
+  display: none;
+}
+
+.ftl-metric-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(12, 21, 36, 0.08);
+}
+.ftl-metric-pair > div {
+  min-width: 0;
+}
+
+.ftl-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid rgba(12, 21, 36, 0.14);
+}
+.ftl-step {
+  min-width: 0;
+  padding: 28px;
+  border-right: 1px solid rgba(12, 21, 36, 0.1);
+}
+.ftl-step:first-child {
+  padding-left: 0;
+}
+.ftl-step:last-child {
+  padding-right: 0;
+  border-right: none;
+}
+@media (max-width: 1079px) {
+  .ftl-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ftl-step {
+    padding: 24px;
+    border-right: 1px solid rgba(12, 21, 36, 0.1);
+  }
+  .ftl-step:nth-child(odd) {
+    padding-left: 0;
+  }
+  .ftl-step:nth-child(even) {
+    padding-right: 0;
+    border-right: none;
+  }
+  .ftl-step:nth-child(n + 3) {
+    border-top: 1px solid rgba(12, 21, 36, 0.1);
+  }
+}
+@media (max-width: 719px) {
+  .ftl-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ftl-step,
+  .ftl-step:first-child,
+  .ftl-step:nth-child(odd),
+  .ftl-step:nth-child(even),
+  .ftl-step:last-child {
+    padding: 22px 0;
+    border-right: none;
+    border-top: 1px solid rgba(12, 21, 36, 0.1);
+  }
+  .ftl-step:first-child {
+    border-top: none;
+  }
+}
+@media (max-width: 719px) {
+  .ftl-metric-pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .ftl-metric-pair > div + div {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(12, 21, 36, 0.08);
+  }
+}
+/* Stats bar: borders/padding follow CSS columns, not JS viewport (mobile-safe). */
+.ftl-stats {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.ftl-stat {
+  min-width: 0;
+  padding: clamp(26px, 3vw, 34px) clamp(16px, 2.4vw, 28px);
+  border-left: 1px solid rgba(12, 21, 36, 0.1);
+}
+.ftl-stat:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+@media (max-width: 1079px) {
+  .ftl-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ftl-stat {
+    border-left: 1px solid rgba(12, 21, 36, 0.1);
+    border-top: none;
+    padding-left: clamp(16px, 2.4vw, 28px);
+  }
+  .ftl-stat:nth-child(odd) {
+    border-left: none;
+    padding-left: 0;
+  }
+  .ftl-stat:nth-child(n + 3) {
+    border-top: 1px solid rgba(12, 21, 36, 0.1);
+  }
+}
+@media (max-width: 719px) {
+  .ftl-stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ftl-stat {
+    border-left: none;
+    border-top: 1px solid rgba(12, 21, 36, 0.1);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .ftl-stat:first-child {
+    border-top: none;
+  }
+}
+
+.ftl-hero-kicker {
+  overflow-wrap: anywhere;
+}
+.ftl-hero-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid rgba(246, 244, 239, 0.18);
+}
+.ftl-hero-kpi {
+  min-width: 0;
+  padding: 26px 20px 0;
+  border-right: 1px solid rgba(246, 244, 239, 0.12);
+}
+.ftl-hero-kpi:first-child {
+  padding-left: 0;
+}
+.ftl-hero-kpi:last-child {
+  padding-right: 0;
+  border-right: none;
+}
+@media (max-width: 1079px) {
+  .ftl-hero-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ftl-hero-kpi {
+    padding: 22px 16px 0;
+    border-right: 1px solid rgba(246, 244, 239, 0.12);
+  }
+  .ftl-hero-kpi:nth-child(odd) {
+    padding-left: 0;
+  }
+  .ftl-hero-kpi:nth-child(even) {
+    padding-right: 0;
+    border-right: none;
+  }
+  .ftl-hero-kpi:nth-child(n + 3) {
+    padding-top: 22px;
+    margin-top: 18px;
+    border-top: 1px solid rgba(246, 244, 239, 0.12);
+  }
+}
+@media (max-width: 719px) {
+  .ftl-hero-kicker {
+    letter-spacing: 0.08em;
+    line-height: 1.45;
+  }
+  .ftl-hero-kpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ftl-hero-kpi,
+  .ftl-hero-kpi:first-child,
+  .ftl-hero-kpi:nth-child(odd),
+  .ftl-hero-kpi:nth-child(even),
+  .ftl-hero-kpi:last-child {
+    padding: 18px 0;
+    margin-top: 0;
+    border-right: none;
+    border-top: 1px solid rgba(246, 244, 239, 0.12);
+  }
+  .ftl-hero-kpi:first-child {
+    border-top: none;
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 939px) {
+  .ftl-nav-desktop {
+    display: none;
+  }
+  .ftl-cta-desktop {
+    display: none;
+  }
+  .ftl-nav-toggle {
+    display: inline-flex;
+  }
+}
+
+.ftl-prose {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #41506b;
+}
+.ftl-prose h2 {
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(26px, 3vw, 34px);
+  line-height: 1.15;
+  color: #0c1524;
+  margin: 36px 0 14px;
+  letter-spacing: -0.02em;
+}
+.ftl-prose h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0c1524;
+  margin: 28px 0 10px;
+}
+.ftl-prose p {
+  margin: 0 0 16px;
+}
+.ftl-prose ul,
+.ftl-prose ol {
+  margin: 0 0 16px;
+  padding-left: 22px;
+}
+.ftl-prose li {
+  margin: 0 0 8px;
+}
+.ftl-prose a {
+  font-weight: 600;
+}
+.ftl-prose strong {
+  color: #0c1524;
+}
