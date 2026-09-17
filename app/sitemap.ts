@@ -15,6 +15,9 @@ const STATIC = [
   "/international",
   "/contact",
   "/blog",
+  "/privacy",
+  "/terms",
+  "/compliance",
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

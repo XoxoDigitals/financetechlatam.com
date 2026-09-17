@@ -97,7 +97,13 @@ export function Footer() {
           <span>
             © 2026 Financetech LATAM. {t("All rights reserved.", "Todos los derechos reservados.")}
           </span>
-          <span>{t("Privacy notice · Terms · CONDUSEF", "Aviso de privacidad · Términos · CONDUSEF")}</span>
+          <span style={css("display:flex;gap:12px;flex-wrap:wrap")}>
+            <FootLink href="/privacy">{t("Privacy notice", "Aviso de privacidad")}</FootLink>
+            <span aria-hidden>·</span>
+            <FootLink href="/terms">{t("Terms", "Términos")}</FootLink>
+            <span aria-hidden>·</span>
+            <FootLink href="/compliance">{t("LFPIORPI", "LFPIORPI")}</FootLink>
+          </span>
         </div>
       </div>
     </footer>
