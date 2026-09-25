@@ -5,9 +5,9 @@ import { css } from "@/lib/css";
 import { color } from "@/lib/theme";
 
 /**
- * Replacement for the design's <image-slot> placeholder. If an image with the
- * slot's id exists in /public/images it is shown; otherwise a labelled
- * placeholder is rendered (matching the original's empty-slot look).
+ * Parent must be position:relative with an explicit size (height, min-height,
+ * or aspect-ratio). The image fills that box — percentage height alone does
+ * not work against min-height parents.
  */
 export function ImageSlot({
   id,
@@ -16,19 +16,19 @@ export function ImageSlot({
   placeholder,
 }: {
   id: string;
-  src?: string; // e.g. "/images/ftl-about-office.webp"
+  src?: string;
   alt?: string;
   placeholder?: string;
 }) {
   if (src) {
     return (
-      <div style={css("position:relative;width:100%;height:100%")}>
+      <div style={css("position:absolute;inset:0")}>
         <Image
           src={src}
-          alt={alt}
+          alt={alt || id}
           fill
           sizes="(max-width: 720px) 100vw, 50vw"
-          style={css("object-fit:cover")}
+          style={{ objectFit: "cover" }}
         />
       </div>
     );
@@ -39,7 +39,7 @@ export function ImageSlot({
       aria-label={placeholder}
       style={{
         ...css(
-          "width:100%;height:100%;display:grid;place-items:center;text-align:center;padding:24px"
+          "position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px"
         ),
         background: color.blueSoft,
         border: `1px dashed ${color.blue}55`,

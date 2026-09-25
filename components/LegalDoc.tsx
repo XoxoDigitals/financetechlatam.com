@@ -26,7 +26,7 @@ export function LegalDoc({
         {t(titleEn, titleEs)}
       </h1>
       <p style={css("font-size:13px;color:#9A999C;margin:0 0 36px")}>
-        {t("Effective date:", "Fecha de vigencia:")} {effective} · Financetech LATAM · financetechlatam.com
+        {t("Effective date:", "Fecha de vigencia:")} {effective} · Financetech Group · financetechgroup.com
       </p>
       {sections.map((s, i) => (
         <section key={i} style={css("margin-bottom:28px")}>

@@ -1,20 +1,13 @@
 /**
  * A single, shared submission shape for EVERY form on the site.
- *
- * Both the "About us" contact form and the "Register" form serialise into this
- * exact structure before being sent to the webhook, so the downstream receiver
- * only ever has to understand one payload — regardless of which form produced it.
  */
 
 export const LEAD_SOURCES = ["about-contact", "register"] as const;
 export type LeadSource = (typeof LEAD_SOURCES)[number];
 
 export const BUSINESS_UNITS = [
-  "collections", // Cobranza y crédito
-  "fintech", // Tecnología financiera
-  "accounting", // Contabilidad e impuestos
-  "international", // Operación internacional
-  "advertising", // Publicidad
+  "consulting", // Business & Finance Consulting
+  "ai-content", // AI Content & Digital Avatars
 ] as const;
 export type BusinessUnit = (typeof BUSINESS_UNITS)[number];
 
@@ -27,29 +20,22 @@ export interface LeadContact {
 
 export interface LeadMeta {
   locale: "en" | "es";
-  page: string; // route the form was submitted from
-  submittedAt: string; // ISO 8601
+  page: string;
+  submittedAt: string;
   userAgent: string;
   referrer: string;
 }
 
-/** The common data structure sent to the webhook for all forms. */
 export interface LeadSubmission {
-  /** Stable identifier of the payload contract. */
   schema: "financetech.lead/v1";
-  /** Which form produced this submission. */
   source: LeadSource;
   contact: LeadContact;
-  /** Selected business units (empty for forms that don't ask). */
   units: BusinessUnit[];
-  /** Portfolio size / annual revenue bucket, when asked; otherwise null. */
   budget: string | null;
-  /** Free-text message / context. */
   message: string;
   meta: LeadMeta;
 }
 
-/** Fields a form component collects; the rest of the payload is derived. */
 export interface LeadFormValues {
   fullName?: string;
   company?: string;
@@ -60,10 +46,6 @@ export interface LeadFormValues {
   budget?: string | null;
 }
 
-/**
- * Build the common LeadSubmission from whatever a given form collected.
- * Missing fields are normalised so the payload shape is always identical.
- */
 export function buildLeadSubmission(
   source: LeadSource,
   values: LeadFormValues,
@@ -91,7 +73,6 @@ export function buildLeadSubmission(
   };
 }
 
-/** Minimal server-side validation of an incoming LeadSubmission. */
 export function validateLeadSubmission(input: unknown): {
   ok: boolean;
   errors: string[];

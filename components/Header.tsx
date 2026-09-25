@@ -3,14 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BrandLogo } from "@/components/BrandLogo";
 import { Box } from "@/components/Box";
 import { css } from "@/lib/css";
-import { NAV } from "@/lib/theme";
+import { NAV, color } from "@/lib/theme";
 import { useLang, useT } from "@/lib/i18n";
 
 function pill(active: boolean) {
   return active
-    ? "padding:6px 11px;border-radius:999px;background:#0C1524;color:#F6F4EF"
+    ? "padding:6px 11px;border-radius:999px;background:#2A1B4A;color:#F6F4EF"
     : "padding:6px 11px;border-radius:999px;background:transparent;color:#8A93A3";
 }
 
@@ -20,12 +21,10 @@ export function Header() {
   const t = useT();
   const [open, setOpen] = useState(false);
 
-  // Close the mobile menu whenever the route changes.
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  // Lock body scroll while the mobile menu is open.
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -44,29 +43,13 @@ export function Header() {
           "position:relative;z-index:70;max-width:1440px;margin:0 auto;padding:10px var(--gutter);min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px"
         )}
       >
-        {/* Logo */}
-        <Link href="/" style={css("display:flex;align-items:center;gap:12px;flex:0 0 auto")}>
-          <div
-            style={css(
-              "width:34px;height:34px;border-radius:9px;background:#0C1524;display:grid;place-items:center;color:#F6F4EF;font-family:'Instrument Serif',serif;font-size:19px;line-height:1"
-            )}
-          >
-            F
-          </div>
-          <div style={css("display:flex;flex-direction:column;line-height:1.05")}>
-            <span style={css("font-size:15px;font-weight:700;letter-spacing:-0.01em;color:#0C1524")}>
-              Financetech
-            </span>
-            <span style={css("font-size:10px;font-weight:600;letter-spacing:0.18em;color:#5A6577")}>
-              LATAM
-            </span>
-          </div>
-        </Link>
+        <BrandLogo />
 
-        {/* Desktop nav */}
         <nav
           className="ftl-nav-desktop"
-          style={css("align-items:center;gap:2px;flex:1 1 auto;justify-content:center;flex-wrap:wrap")}
+          style={css(
+            "align-items:center;gap:2px;flex:1 1 auto;justify-content:center;flex-wrap:wrap"
+          )}
         >
           {NAV.map((item) => {
             const active =
@@ -85,9 +68,12 @@ export function Header() {
                 </Link>
                 {active && (
                   <div
-                    style={css(
-                      "position:absolute;left:12px;right:12px;bottom:0;height:2px;background:#2440FF;border-radius:2px"
-                    )}
+                    style={{
+                      ...css(
+                        "position:absolute;left:12px;right:12px;bottom:0;height:2px;border-radius:2px"
+                      ),
+                      background: color.brandYellow,
+                    }}
                   />
                 )}
               </Box>
@@ -95,7 +81,6 @@ export function Header() {
           })}
         </nav>
 
-        {/* Right cluster */}
         <div style={css("display:flex;align-items:center;gap:8px;flex:0 0 auto")}>
           <div
             onClick={toggle}
@@ -112,15 +97,14 @@ export function Header() {
           <Box
             as="span"
             className="ftl-cta-desktop"
-            s="background:#0C1524;color:#F6F4EF;padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer"
-            hover="background:#2440FF"
+            s="background:#2A1B4A;color:#F6F4EF;padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer"
+            hover="background:#EEE419;color:#2A1B4A"
           >
             <Link href="/contact" style={{ color: "inherit" }}>
-              {t("Register", "Registro")}
+              {t("Contact", "Contacto")}
             </Link>
           </Box>
 
-          {/* Hamburger (mobile only) */}
           <button
             className="ftl-nav-toggle"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -139,7 +123,6 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
       {open && (
         <>
           <div
@@ -164,14 +147,23 @@ export function Header() {
                     key={item.path}
                     href={item.path}
                     onClick={() => setOpen(false)}
-                    style={css(
-                      "display:flex;align-items:center;justify-content:space-between;padding:14px 6px;font-size:16px;font-weight:600;border-bottom:1px solid rgba(12,21,36,0.08);color:" +
-                        (active ? "#2440FF" : "#0C1524")
-                    )}
+                    style={{
+                      ...css(
+                        "display:flex;align-items:center;justify-content:space-between;padding:14px 6px;font-size:16px;font-weight:600;border-bottom:1px solid rgba(12,21,36,0.08)"
+                      ),
+                      color: active ? color.brandPurple : "#0C1524",
+                    }}
                   >
                     <span>{t(item.en, item.es)}</span>
                     {active && (
-                      <span style={css("width:7px;height:7px;border-radius:50%;background:#2440FF")} />
+                      <span
+                        style={{
+                          width: 7,
+                          height: 7,
+                          borderRadius: "50%",
+                          background: color.brandYellow,
+                        }}
+                      />
                     )}
                   </Link>
                 );
@@ -181,10 +173,10 @@ export function Header() {
               href="/contact"
               onClick={() => setOpen(false)}
               style={css(
-                "display:block;margin-top:16px;text-align:center;background:#0C1524;color:#F6F4EF;padding:15px;border-radius:12px;font-size:15px;font-weight:600"
+                "display:block;margin-top:16px;text-align:center;background:#2A1B4A;color:#F6F4EF;padding:15px;border-radius:12px;font-size:15px;font-weight:600"
               )}
             >
-              {t("Register", "Registro")}
+              {t("Contact", "Contacto")}
             </Link>
           </div>
         </>
@@ -195,7 +187,7 @@ export function Header() {
 
 function barStyle(open: boolean, which: "top" | "mid" | "bot") {
   const base =
-    "position:absolute;left:0;width:18px;height:2px;background:#0C1524;border-radius:2px;transition:transform 0.2s ease,opacity 0.2s ease,top 0.2s ease";
+    "position:absolute;left:0;width:18px;height:2px;background:#2A1B4A;border-radius:2px;transition:transform 0.2s ease,opacity 0.2s ease,top 0.2s ease";
   if (which === "top")
     return css(base + (open ? ";top:6px;transform:rotate(45deg)" : ";top:0"));
   if (which === "mid")

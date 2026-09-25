@@ -8,11 +8,13 @@ export const revalidate = 60;
 const STATIC = [
   "/",
   "/about",
-  "/advertising",
-  "/fintech",
-  "/accounting",
-  "/collections",
-  "/international",
+  "/consulting",
+  "/ai-content",
+  "/how-we-work",
+  "/who-we-help",
+  "/results",
+  "/team",
+  "/faq",
   "/contact",
   "/blog",
   "/privacy",
@@ -35,7 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     posts = live.map((p) => ({
       url: absUrl(`/blog/${p.slug}`),
       lastModified: p.updated_at ? new Date(p.updated_at) : now,
-      changeFrequency: "monthly",
+      changeFrequency: "monthly" as const,
       priority: 0.75,
     }));
   } catch {

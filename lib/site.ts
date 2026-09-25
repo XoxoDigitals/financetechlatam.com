@@ -1,12 +1,26 @@
-export const SITE_NAME = "Financetech LATAM";
-export const SITE_LEGAL = "Financetech LATAM";
+export const SITE_NAME = "Financetech Group";
+export const SITE_LEGAL = "FINANCETECH GROUP LLC";
+export const SITE_EIN = "32-0866683";
+export const SITE_EMAIL = "contact@financetechgroup.com";
+export const SITE_PHONE = "+1 (307) 888-8475";
+export const SITE_PHONE_TEL = "+13078888475";
+export const SITE_WHATSAPP = "13078888475";
+export const SITE_ADDRESS_LINE1 = "30 N Gould St 59020";
+export const SITE_ADDRESS_LINE2 = "Sheridan, WY 82801";
+export const SITE_INSTAGRAM = "financetech.group";
+export const SITE_INSTAGRAM_URL = "https://www.instagram.com/financetech.group/";
+export const SITE_DOMAIN = "financetechgroup.com";
+
 export const SITE_TAGLINE =
-  "Collections, credit, accounting, tax, technology and advertising for companies across Mexico and Latin America.";
+  "Business & finance consulting and AI-powered content & digital avatars — one brand, two clear paths to grow.";
 export const SITE_TAGLINE_ES =
-  "Cobranza, crédito, contabilidad, impuestos, tecnología y publicidad para empresas en México y Latinoamérica.";
+  "Consultoría de negocio y finanzas, y contenido e avatares digitales con IA — una marca, dos caminos claros para crecer.";
 
 export function siteUrl() {
-  return (process.env.NEXT_PUBLIC_SITE_URL || "https://www.financetechlatam.com").replace(/\/$/, "");
+  return (process.env.NEXT_PUBLIC_SITE_URL || "https://www.financetechgroup.com").replace(
+    /\/$/,
+    ""
+  );
 }
 
 export function absUrl(path: string) {

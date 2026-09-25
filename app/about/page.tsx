@@ -1,110 +1,190 @@
 "use client";
 
-import { css } from "@/lib/css";
-import { useT } from "@/lib/i18n";
 import { ImageSlot } from "@/components/ImageSlot";
 import { LeadForm } from "@/components/LeadForm";
+import {
+  CtaBand,
+  Eyebrow,
+  PageHero,
+  SectionShell,
+  SplitMedia,
+} from "@/components/sections";
+import { css } from "@/lib/css";
+import { color } from "@/lib/theme";
+import { useT } from "@/lib/i18n";
+
+const VALUES = [
+  { en: "Clarity and order", es: "Claridad y orden" },
+  { en: "Analytical rigor", es: "Rigor analítico" },
+  { en: "Innovation with purpose", es: "Innovación con propósito" },
+  { en: "Confidentiality", es: "Confidencialidad" },
+  { en: "Measurable results", es: "Resultados medibles" },
+  { en: "Hands-on, close support", es: "Acompañamiento cercano y práctico" },
+];
 
 export default function AboutPage() {
   const t = useT();
+
   return (
     <div>
-      <section style={css("max-width:1440px;margin:0 auto;padding:clamp(44px,6vw,88px) var(--gutter) clamp(32px,4.5vw,64px);border-bottom:1px solid rgba(12,21,36,0.10)")}>
-        <div style={css("font-size:12px;font-weight:700;letter-spacing:0.14em;color:#2440FF;margin-bottom:18px")}>
-          {t("ABOUT US", "NOSOTROS")}
-        </div>
-        <h1 style={css("font-family:'Instrument Serif',serif;font-size:clamp(36px,5.4vw,66px);line-height:1;letter-spacing:-0.025em;margin:0 0 24px;max-width:900px")}>
-          {t("A financial firm built like an operating company.", "Un despacho financiero construido como una empresa de operación.")}
-        </h1>
-        <p style={css("font-size:19px;line-height:1.55;color:#5A6577;max-width:720px;margin:0")}>
-          {t(
-            "We started in 2004 running collections for Mexican banks. Today we operate the full finance function for mid-market companies and corporate credit departments across nine countries.",
-            "Nacimos en 2004 dando servicios de cobranza a bancos mexicanos. Hoy operamos la función financiera completa de empresas medianas y áreas de crédito corporativas en nueve países."
+      <PageHero
+        accent="ink"
+        eyebrow={t("About us", "Nosotros")}
+        title={t(
+          "One Company, Two Ways to Help Your Business Grow",
+          "Una empresa, dos formas de ayudar a crecer tu negocio"
+        )}
+        subtitle={t(
+          "We are a business solutions company built around a simple idea: modern businesses need both a solid internal foundation and a modern way to market themselves.",
+          "Somos una empresa de soluciones de negocio con una idea simple: las empresas modernas necesitan una base interna sólida y una forma moderna de promocionarse."
+        )}
+        imageSrc="/images/collab-phones.jpg"
+        ctaHref="/contact"
+        secondaryHref="/team"
+        secondaryLabel={t("Meet the team", "Conoce al equipo")}
+      />
+
+      <SectionShell>
+        <div
+          style={css(
+            "position:relative;min-height:clamp(280px,42vw,460px);border-radius:24px;overflow:hidden"
           )}
-        </p>
-      </section>
-
-      <section style={css("max-width:1440px;margin:0 auto;padding:clamp(38px,5vw,72px) var(--gutter)")}>
-        <div style={css("display:grid;grid-template-columns:var(--g2);gap:clamp(32px,4vw,56px);align-items:start")}>
-          <div style={css("border-radius:20px;overflow:hidden;height:420px;position:relative")}>
-            <ImageSlot
-              id="ftl-about-office"
-              src="/images/ftl-about-office.webp"
-              alt={t("Financetech LATAM office", "Oficina de Financetech LATAM")}
-              placeholder={t("Drop an office or team photo", "Foto de oficina o equipo")}
-            />
-          </div>
-          <div>
-            <h2 style={css("font-family:'Instrument Serif',serif;font-size:clamp(26px,3vw,38px);line-height:1.08;margin:0 0 20px")}>
-              {t("How we got here", "Cómo llegamos aquí")}
-            </h2>
-            <div style={css("display:flex;flex-direction:column")}>
-              {[
-                { y: "2004", en: "Founded in Mexico City as an extrajudicial collections firm for the banking sector.", es: "Fundación en Ciudad de México como despacho de cobranza extrajudicial para banca." },
-                { y: "2011", en: "Added the accounting and tax practice to serve SMB clients end to end.", es: "Se agrega la práctica de contabilidad e impuestos para atender a clientes PyME." },
-                { y: "2017", en: "Built our own collections and bank-reconciliation platform.", es: "Desarrollo de plataforma propia de cobranza y conciliación bancaria." },
-                { y: "2021", en: "Expanded into Central and South America with cross-border operations and transfers.", es: "Expansión a Centro y Sudamérica con operación internacional y transferencias." },
-                { y: "2026", en: "680 active clients and five units operating on a single dashboard.", es: "680 clientes activos y cinco unidades operando sobre un mismo tablero." },
-              ].map((r, i, arr) => (
-                <div
-                  key={r.y}
-                  style={css(
-                    "display:grid;grid-template-columns:76px 1fr;gap:20px;padding:20px 0;border-top:1px solid rgba(12,21,36,0.12)" +
-                      (i === arr.length - 1 ? ";border-bottom:1px solid rgba(12,21,36,0.12)" : "")
-                  )}
-                >
-                  <span style={css("font-family:'Instrument Serif',serif;font-size:22px;color:#2440FF")}>{r.y}</span>
-                  <p style={css("font-size:14.5px;line-height:1.6;color:#5A6577;margin:0")}>{t(r.en, r.es)}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+        >
+          <ImageSlot id="about-story" src="/images/ftl-about-office.webp" alt="" />
         </div>
-      </section>
+      </SectionShell>
 
-      <section style={css("background:#fff;border-top:1px solid rgba(12,21,36,0.10);border-bottom:1px solid rgba(12,21,36,0.10)")}>
-        <div style={css("max-width:1440px;margin:0 auto;padding:clamp(40px,5.5vw,80px) var(--gutter)")}>
-          <h2 style={css("font-family:'Instrument Serif',serif;font-size:clamp(28px,3.2vw,40px);line-height:1.08;margin:0 0 40px")}>
-            {t("How we decide", "Cómo decidimos")}
-          </h2>
-          <div style={css("display:grid;grid-template-columns:var(--g3);gap:16px")}>
-            {[
-              { hen: "Data before opinion", hes: "El dato antes de la opinión", en: "Every collections strategy is tested on a sample before it touches the full portfolio.", es: "Cada estrategia de cobranza se prueba en una muestra antes de aplicarse a la cartera completa." },
-              { hen: "Fair treatment of debtors", hes: "Trato correcto al deudor", en: "Protocols aligned to CONDUSEF rules, with every interaction recorded. Sustainable recovery is negotiated, not pressured.", es: "Protocolos alineados a CONDUSEF y grabación de cada interacción. La recuperación sostenible se negocia, no se presiona." },
-              { hen: "One accountable owner", hes: "Un solo responsable", en: "Each account has one director accountable across all five units — not five vendors coordinating.", es: "Cada cuenta tiene un director responsable de las cinco unidades, no cinco proveedores coordinándose." },
-            ].map((c, i) => (
-              <div key={i} style={css("border:1px solid rgba(12,21,36,0.10);border-radius:18px;padding:clamp(22px,2.6vw,30px)")}>
-                <h3 style={css("font-size:19px;font-weight:700;margin:0 0 10px")}>{t(c.hen, c.hes)}</h3>
-                <p style={css("font-size:14.5px;line-height:1.6;color:#5A6577;margin:0")}>{t(c.en, c.es)}</p>
+      <SectionShell accentBg={color.goldSoft}>
+        <Eyebrow accent="gold">{t("Mission", "Misión")}</Eyebrow>
+        <h2 style={css("font-family:'Instrument Serif',serif;font-size:clamp(26px,3.4vw,40px);margin:0 0 12px;max-width:800px")}>
+          {t(
+            "To give businesses the internal structure and the digital tools they need to grow with clarity, efficiency, and confidence.",
+            "Dar a las empresas la estructura interna y las herramientas digitales para crecer con claridad, eficiencia y confianza."
+          )}
+        </h2>
+      </SectionShell>
+
+      <SectionShell accentBg={color.tealSoft}>
+        <Eyebrow accent="teal">{t("Vision", "Visión")}</Eyebrow>
+        <h2 style={css("font-family:'Instrument Serif',serif;font-size:clamp(26px,3.4vw,40px);margin:0 0 12px;max-width:800px")}>
+          {t(
+            "To be the trusted partner businesses turn to for both operational excellence and next-generation digital content solutions.",
+            "Ser el socio de confianza para excelencia operativa y soluciones de contenido digital de nueva generación."
+          )}
+        </h2>
+      </SectionShell>
+
+      <SectionShell>
+        <h2 style={css("font-family:'Instrument Serif',serif;font-size:clamp(28px,3.6vw,42px);margin:0 0 28px")}>
+          {t("Core values", "Valores")}
+        </h2>
+        <div style={css("display:grid;grid-template-columns:var(--g3);gap:16px")}>
+          {VALUES.map((v, i) => (
+            <div
+              key={v.en}
+              className="ftl-card-rise"
+              style={{
+                ...css("padding:22px 20px;border-radius:16px;background:#fff;border:1px solid rgba(12,21,36,0.08)"),
+                animationDelay: `${i * 50}ms`,
+              }}
+            >
+              <div
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: 8,
+                  background: i % 2 === 0 ? color.goldSoft : color.tealSoft,
+                  color: i % 2 === 0 ? color.gold : color.teal,
+                  display: "grid",
+                  placeItems: "center",
+                  fontWeight: 700,
+                  marginBottom: 12,
+                  fontSize: 13,
+                }}
+              >
+                {i + 1}
               </div>
-            ))}
+              <div style={css("font-weight:700;font-size:16px")}>{t(v.en, v.es)}</div>
+            </div>
+          ))}
+        </div>
+      </SectionShell>
+
+      <SplitMedia
+        accent="gold"
+        eyebrow={t("Two divisions", "Dos divisiones")}
+        title={t(
+          "Specialized under one roof.",
+          "Especializadas bajo un mismo techo."
+        )}
+        body={t(
+          "One division focused on organizational and financial structure; the other on AI-powered content creation and digital avatars — same brand, equal weight.",
+          "Una división enfocada en estructura organizacional y financiera; la otra en contenido con IA y avatares digitales — misma marca, mismo peso."
+        )}
+        imageSrc="/images/pexels-canvastudio-3194519.jpg"
+        ctaHref="/consulting"
+        ctaLabel={t("Consulting path", "Camino de consultoría")}
+      />
+
+      <SectionShell accentBg="#EEEEE8">
+        <div style={css("display:grid;grid-template-columns:var(--g2);gap:20px")}>
+          <div style={css("padding:28px;border-radius:18px;background:#fff")}>
+            <Eyebrow accent="gold">{t("Consulting", "Consultoría")}</Eyebrow>
+            <p style={css("font-size:15.5px;line-height:1.55;color:#5A6577;margin:0")}>
+              {t(
+                "Established, trustworthy, structured — for founders who need order and financial clarity.",
+                "Establecida, confiable y estructurada — para fundadores que necesitan orden y claridad financiera."
+              )}
+            </p>
+          </div>
+          <div style={css("padding:28px;border-radius:18px;background:#fff")}>
+            <Eyebrow accent="teal">{t("AI Content", "Contenido IA")}</Eyebrow>
+            <p style={css("font-size:15.5px;line-height:1.55;color:#5A6577;margin:0")}>
+              {t(
+                "Innovative and forward-looking — without breaking the shared professional brand identity.",
+                "Innovadora y con visión de futuro — sin romper la identidad profesional compartida."
+              )}
+            </p>
           </div>
         </div>
-      </section>
+      </SectionShell>
 
-      <section style={css("max-width:1440px;margin:0 auto;padding:clamp(40px,5.5vw,80px) var(--gutter)")}>
-        <div style={css("display:grid;grid-template-columns:var(--g32);gap:clamp(32px,4vw,56px);align-items:start")}>
+      <SectionShell>
+        <div
+          style={css(
+            "display:grid;grid-template-columns:var(--gHero);gap:clamp(24px,4vw,48px);align-items:start"
+          )}
+        >
           <div>
-            <div style={css("font-size:12px;font-weight:700;letter-spacing:0.14em;color:#2440FF;margin-bottom:14px")}>
-              {t("GET IN TOUCH", "HABLEMOS")}
-            </div>
-            <h2 style={css("font-family:'Instrument Serif',serif;font-size:clamp(28px,3.2vw,40px);line-height:1.06;letter-spacing:-0.02em;margin:0 0 18px")}>
-              {t("Talk to the team that would actually run your account.", "Habla directamente con el equipo que operaría tu cuenta.")}
+            <Eyebrow accent="ink">{t("Get in touch", "Contáctanos")}</Eyebrow>
+            <h2 style={css("font-family:'Instrument Serif',serif;font-size:clamp(26px,3.4vw,40px);margin:0 0 14px")}>
+              {t("Tell us which path fits.", "Cuéntanos qué camino te corresponde.")}
             </h2>
-            <p style={css("font-size:16px;line-height:1.6;color:#5A6577;margin:0 0 28px;max-width:420px")}>
-              {t("No sales intermediaries. We reply within one business day.", "Sin intermediarios comerciales. Respondemos en un día hábil.")}
+            <p style={css("font-size:15.5px;line-height:1.55;color:#5A6577;margin:0 0 18px")}>
+              {t(
+                "Whether your business needs to fix internal disorder or scale marketing content, we’ll help you choose the right fit.",
+                "Ya sea que necesites corregir desorden interno o escalar contenido de marketing, te ayudamos a elegir."
+              )}
             </p>
-            <div style={css("display:flex;flex-direction:column;gap:14px;font-size:14.5px;color:#41506B")}>
-              <span>+52 55 1234 5678</span>
-              <span>contacto@financetechlatam.com</span>
-              <span>{t("Paseo de la Reforma 296, Mexico City", "Paseo de la Reforma 296, Ciudad de México")}</span>
+            <div
+              style={css(
+                "position:relative;min-height:200px;border-radius:16px;overflow:hidden;margin-top:20px"
+              )}
+            >
+              <ImageSlot id="about-form-img" src="/images/pexels-sora-shimazaki-5935743.jpg" alt="" />
             </div>
           </div>
-          <div style={css("background:#fff;border:1px solid rgba(12,21,36,0.10);border-radius:24px;padding:clamp(24px,3vw,34px)")}>
+          <div style={css("padding:28px;border-radius:20px;background:#fff;border:1px solid rgba(12,21,36,0.08)")}>
             <LeadForm variant="about" />
           </div>
         </div>
-      </section>
+      </SectionShell>
+
+      <CtaBand
+        accent="ink"
+        title={t("Let's build the right solution", "Construyamos la solución correcta")}
+        href="/contact"
+      />
     </div>
   );
 }

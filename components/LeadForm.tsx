@@ -16,7 +16,7 @@ function chipStyle(on: boolean) {
   return (
     "font-size:13px;padding:9px 14px;border-radius:999px;cursor:pointer;font-weight:600;border:1px solid " +
     (on
-      ? "#2440FF;background:#2440FF;color:#fff"
+      ? "#0C1524;background:#0C1524;color:#fff"
       : "rgba(12,21,36,0.16);background:#F6F4EF;color:#41506B")
   );
 }
@@ -32,11 +32,8 @@ type Values = {
 };
 
 const EMPTY_UNITS: Record<BusinessUnit, boolean> = {
-  collections: false,
-  fintech: false,
-  accounting: false,
-  international: false,
-  advertising: false,
+  consulting: false,
+  "ai-content": false,
 };
 
 export function LeadForm({
@@ -54,7 +51,7 @@ export function LeadForm({
     email: "",
     phone: "",
     message: "",
-    budget: "Menos de $10M MXN",
+    budget: "Under $40K USD",
     units: { ...EMPTY_UNITS },
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -98,11 +95,16 @@ export function LeadForm({
   }
 
   const UNIT_LABELS: { key: BusinessUnit; en: string; es: string }[] = [
-    { key: "collections", en: "Collections & credit", es: "Cobranza y crédito" },
-    { key: "fintech", en: "Financial technologies", es: "Tecnología financiera" },
-    { key: "accounting", en: "Accounting & tax", es: "Contabilidad e impuestos" },
-    { key: "international", en: "International", es: "Operación internacional" },
-    { key: "advertising", en: "Advertising", es: "Publicidad" },
+    {
+      key: "consulting",
+      en: "Business & Finance Consulting",
+      es: "Consultoría de negocio y finanzas",
+    },
+    {
+      key: "ai-content",
+      en: "AI Content & Digital Avatars",
+      es: "Contenido IA y avatares digitales",
+    },
   ];
 
   return (
@@ -149,7 +151,7 @@ export function LeadForm({
             type="tel"
             value={v.phone}
             onChange={set("phone")}
-            placeholder="+52 55 0000 0000"
+            placeholder="+1 (307) 888-8475"
             style={css(FIELD)}
           />
         </div>
@@ -159,7 +161,7 @@ export function LeadForm({
         <>
           <div style={css("margin-bottom:16px")}>
             <label style={css(LABEL)}>
-              {t("Which units are you interested in?", "¿Qué unidades te interesan?")}
+              {t("Service of interest", "Servicio de interés")}
             </label>
             <div style={css("display:flex;flex-wrap:wrap;gap:8px")}>
               {UNIT_LABELS.map((u) => (
@@ -178,13 +180,13 @@ export function LeadForm({
 
           <div style={css("margin-bottom:16px")}>
             <label style={css(LABEL)}>
-              {t("Portfolio size or annual revenue", "Tamaño de cartera o facturación anual")}
+              {t("Budget range (USD)", "Rango de presupuesto (USD)")}
             </label>
             <select value={v.budget} onChange={set("budget")} style={css(FIELD)}>
-              <option>Menos de $10M MXN</option>
-              <option>$10M – $50M MXN</option>
-              <option>$50M – $250M MXN</option>
-              <option>Más de $250M MXN</option>
+              <option>Under $40K USD</option>
+              <option>$40K – $80K USD</option>
+              <option>$80K – $150K USD</option>
+              <option>$150K+ USD</option>
             </select>
           </div>
         </>
@@ -220,7 +222,7 @@ export function LeadForm({
         {status === "sending"
           ? t("Sending…", "Enviando…")
           : variant === "register"
-          ? t("Send registration", "Enviar registro")
+          ? t("Book a Free Consultation", "Agenda una consulta gratis")
           : t("Send message", "Enviar mensaje")}
       </button>
 
@@ -241,8 +243,8 @@ export function LeadForm({
         >
           {variant === "register"
             ? t(
-                "Registration received. We'll be in touch within one business day.",
-                "Registro recibido. Te contactamos en un día hábil."
+                "Request received. We'll be in touch within one business day.",
+                "Solicitud recibida. Te contactamos en un día hábil."
               )
             : t(
                 "Message received. We'll be in touch within one business day.",

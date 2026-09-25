@@ -1,16 +1,32 @@
 import type { Metadata } from "next";
-import { SITE_NAME, SITE_TAGLINE, absUrl, siteUrl } from "@/lib/site";
+import {
+  SITE_ADDRESS_LINE1,
+  SITE_EMAIL,
+  SITE_NAME,
+  SITE_PHONE_TEL,
+  SITE_TAGLINE,
+  absUrl,
+  siteUrl,
+} from "@/lib/site";
 
 type PageKey =
   | "home"
   | "about"
+  | "consulting"
+  | "ai-content"
+  | "how-we-work"
+  | "who-we-help"
+  | "results"
+  | "team"
+  | "faq"
+  | "contact"
+  | "blog"
+  // legacy keys kept so old route layouts still compile (redirected in next.config)
   | "advertising"
   | "fintech"
   | "accounting"
   | "collections"
-  | "international"
-  | "contact"
-  | "blog";
+  | "international";
 
 const PAGES: Record<
   PageKey,
@@ -18,69 +34,109 @@ const PAGES: Record<
 > = {
   home: {
     path: "/",
-    title: "Financial operations partner for Mexico and LATAM",
+    title: "Smarter Structure. Smarter Content.",
     description:
-      "Financetech LATAM runs collections, credit, accounting, tax, fintech rails and advertising as one operating partner. Measured SLAs, CONDUSEF-aware debtor treatment, and a single scorecard for growing companies in Mexico.",
+      "Financetech LATAM helps businesses grow with business & finance consulting and AI-powered content & digital avatars — one brand, two clear paths.",
     keywords:
-      "collections Mexico, cobranza, credit BPO, accounting outsourcing Mexico, fintech operations LATAM, SAT CFDI, CONDUSEF, financial back office",
+      "business consulting, financial structure, AI avatars, UGC content, content automation, Financetech LATAM",
   },
   about: {
     path: "/about",
-    title: "About us — operating company, not a vendor stack",
+    title: "About us — one company, two ways to grow",
     description:
-      "Meet the Financetech LATAM operating model: five business units, shared data, governance and reporting. Contact the team that runs collections, accounting, fintech and advertising as one back office.",
-    keywords: "Financetech LATAM, financial BPO Mexico, about, operating partner",
+      "We operate two specialized divisions under one roof: organizational and financial structure, and AI-powered content creation and digital avatars.",
+    keywords: "Financetech LATAM, about, consulting, AI content",
   },
-  advertising: {
-    path: "/advertising",
-    title: "Financial advertising and acquisition for regulated offers",
+  consulting: {
+    path: "/consulting",
+    title: "Business & Finance Consulting",
     description:
-      "Performance advertising for credit, collections and financial products in Mexico and LATAM — compliant creative, channel mix and conversion measurement tied to your operating units.",
-    keywords: "financial advertising Mexico, credit marketing, regulated acquisition LATAM",
+      "Organizational restructuring, process improvement, resource optimization, and financial structure for mid-sized companies and founders.",
+    keywords: "organizational restructuring, process improvement, financial KPIs, consulting Mexico",
   },
-  fintech: {
-    path: "/fintech",
-    title: "Financial technology operations — SPEI, reconciliations, rails",
+  "ai-content": {
+    path: "/ai-content",
+    title: "AI Content & Digital Avatars",
     description:
-      "Operate payment rails, bank connectivity, reconciliations and portfolio systems without pausing collections. Financetech LATAM integrates ERP, CRM and banks for Mexican and regional finance teams.",
-    keywords: "SPEI operations, payment rails Mexico, fintech BPO, bank reconciliation, STP",
+      "Custom AI avatars, UGC-style ads, voiceover & podcast production, and content automation for brands and digital businesses.",
+    keywords: "AI avatars, UGC ads, AI voiceover, podcast production, content automation",
   },
-  accounting: {
-    path: "/accounting",
-    title: "Accounting and tax operations in Mexico",
+  "how-we-work": {
+    path: "/how-we-work",
+    title: "How we work",
     description:
-      "Monthly close, SAT and CFDI-ready bookkeeping, tax compliance and audit-ready files. Outsource the finance function without losing control of the close calendar.",
-    keywords: "accounting outsourcing Mexico, SAT, CFDI 4.0, monthly close, tax BPO",
+      "Shared four-step methodology for consulting and AI content: diagnosis/discovery, design, implementation, and scale.",
+    keywords: "consulting methodology, AI content process",
   },
-  collections: {
-    path: "/collections",
-    title: "Collections and credit recovery in Mexico",
+  "who-we-help": {
+    path: "/who-we-help",
+    title: "Who we help",
     description:
-      "Early-stage, extrajudicial and legal recovery for banking, retail, services and corporate credit. Portfolio scoring, omnichannel contact and regulated debtor treatment under Mexican rules.",
-    keywords:
-      "cobranza Mexico, collections agency, credit recovery, extrajudicial collections, CONDUSEF, portfolio scoring",
+      "Mid-sized companies, founders, e-commerce brands, creators and agencies who need structure or scalable content.",
+    keywords: "ideal clients, consulting audience, AI content clients",
   },
-  international: {
-    path: "/international",
-    title: "International operations — Mexico, US corridor and LATAM",
+  results: {
+    path: "/results",
+    title: "Results & case studies",
+    description: "Metric and testimonial formats for consulting and AI content engagements.",
+    keywords: "case studies, consulting results, content metrics",
+  },
+  team: {
+    path: "/team",
+    title: "Team",
+    description: "Consulting and AI content specialists under one Financetech LATAM brand.",
+    keywords: "team, consultants, AI content strategists",
+  },
+  faq: {
+    path: "/faq",
+    title: "FAQ",
     description:
-      "Cross-border collections, multi-entity accounting and operating playbooks for groups that sell in Mexico and the United States. One partner across jurisdictions.",
-    keywords: "cross-border collections, Mexico US corridor, LATAM finance operations",
+      "Frequently asked questions about business & finance consulting and AI content & digital avatars.",
+    keywords: "FAQ consulting, FAQ AI avatars",
   },
   contact: {
     path: "/contact",
-    title: "Register your company — recovery projection in five days",
+    title: "Book a free consultation",
     description:
-      "Send an anonymised portfolio extract. Financetech LATAM returns a recovery projection, cost comparison and compliance review. No cost and no obligation to sign.",
-    keywords: "register, collections RFP, recovery projection Mexico, finance BPO contact",
+      "Schedule a free consultation for consulting or AI content. Tell us which path fits your business.",
+    keywords: "contact, free consultation, Financetech LATAM",
   },
   blog: {
     path: "/blog",
-    title: "Insights — collections, credit, accounting and fintech in LATAM",
+    title: "Insights — structure, finance, and AI content",
     description:
-      "Practical guides on Mexican collections law, SAT/CFDI, portfolio recovery, SPEI operations and outsourcing the finance function. Written for operators, CFOs and credit managers.",
-    keywords:
-      "collections blog Mexico, cobranza guide, SAT CFDI, credit operations LATAM, finance BPO insights",
+      "Practical notes for founders and operators on organizational structure, financial clarity, and AI-powered content systems.",
+    keywords: "insights, consulting blog, AI content blog",
+  },
+  advertising: {
+    path: "/ai-content",
+    title: "AI Content & Digital Avatars",
+    description: "Redirected to AI Content services.",
+    keywords: "AI content",
+  },
+  fintech: {
+    path: "/ai-content",
+    title: "AI Content & Digital Avatars",
+    description: "Redirected to AI Content services.",
+    keywords: "AI content",
+  },
+  accounting: {
+    path: "/consulting",
+    title: "Business & Finance Consulting",
+    description: "Redirected to Consulting services.",
+    keywords: "consulting",
+  },
+  collections: {
+    path: "/consulting",
+    title: "Business & Finance Consulting",
+    description: "Redirected to Consulting services.",
+    keywords: "consulting",
+  },
+  international: {
+    path: "/consulting",
+    title: "Business & Finance Consulting",
+    description: "Redirected to Consulting services.",
+    keywords: "consulting",
   },
 };
 
@@ -112,10 +168,9 @@ export function pageMetadata(key: PageKey): Metadata {
 }
 
 export function rootMetadata(): Metadata {
-  const home = pageMetadata("home");
   return {
     metadataBase: new URL(siteUrl()),
-    ...home,
+    ...pageMetadata("home"),
     title: {
       default: `${PAGES.home.title} | ${SITE_NAME}`,
       template: `%s | ${SITE_NAME}`,
@@ -125,7 +180,7 @@ export function rootMetadata(): Metadata {
     authors: [{ name: SITE_NAME, url: siteUrl() }],
     creator: SITE_NAME,
     publisher: SITE_NAME,
-    category: "Finance",
+    category: "Business",
     formatDetection: { telephone: false, email: false, address: false },
   };
 }
@@ -135,37 +190,51 @@ export function organizationJsonLd() {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: SITE_NAME,
+    legalName: "FINANCETECH GROUP LLC",
     description: SITE_TAGLINE,
     url: siteUrl(),
     areaServed: [
-      { "@type": "Country", name: "Mexico" },
+      { "@type": "Country", name: "United States" },
       { "@type": "Place", name: "Latin America" },
     ],
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Ciudad de México",
-      addressCountry: "MX",
+      streetAddress: SITE_ADDRESS_LINE1,
+      addressLocality: "Sheridan",
+      addressRegion: "WY",
+      postalCode: "82801",
+      addressCountry: "US",
     },
-    email: "contacto@financetechlatam.com",
-    telephone: "+52-55-1234-5678",
+    email: SITE_EMAIL,
+    telephone: SITE_PHONE_TEL,
     knowsAbout: [
-      "Collections",
-      "Credit recovery",
-      "Accounting",
-      "Tax compliance",
-      "Fintech operations",
-      "CFDI",
-      "CONDUSEF",
+      "Business consulting",
+      "Organizational restructuring",
+      "Financial structure",
+      "AI digital avatars",
+      "UGC content",
+      "Content automation",
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Operating units",
+      name: "Service lines",
       itemListElement: [
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Collections & credit", url: absUrl("/collections") } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Financial technologies", url: absUrl("/fintech") } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Accounting & tax", url: absUrl("/accounting") } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Advertising", url: absUrl("/advertising") } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "International operations", url: absUrl("/international") } },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Business & Finance Consulting",
+            url: absUrl("/consulting"),
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "AI Content & Digital Avatars",
+            url: absUrl("/ai-content"),
+          },
+        },
       ],
     },
   };
